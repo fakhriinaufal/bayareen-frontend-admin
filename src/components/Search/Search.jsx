@@ -1,6 +1,6 @@
 import search from "../../assets/icon/search.svg";
 
-export default function InputImg({
+export default function Search({
   name,
   type,
   value,
