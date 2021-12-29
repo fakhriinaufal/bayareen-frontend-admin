@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function AddProduct() {
   const [category, setCategory] = useState({
     val: null,
-    text: "Select",
+    text: "Cari category",
   });
   const mock = [
     {
@@ -27,8 +27,8 @@ export default function AddProduct() {
         <form className="" action="">
           <Input name={"product-name"} text={"Product Name"} />
           <Dropdown
-            text={"product-category"}
-            name={"Product Category"}
+            text={"Product Category"}
+            name={"product-category"}
             list={mock}
             value={category}
             containerClassName={"mt-5"}
