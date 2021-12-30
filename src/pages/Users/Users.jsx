@@ -25,7 +25,7 @@ export default function Users(props) {
       <div className="flex-col ml-10 mt-8 mr-10">
         <div className="text-2xl font-bold text-dark-green">Users</div>
         <div className="inline-flex mt-4">
-          <Search containerClassName={"mr-4"} />
+          <Search containerClassName={"mr-4"} placeholder={"Search"} />
           <DropdownImg
             icon={sortby}
             name={"sort"}
