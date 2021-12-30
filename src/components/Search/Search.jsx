@@ -26,7 +26,7 @@ export default function Search({
         onChange={onChange}
         disabled={disabled}
         placeholder={placeholder}
-        className={`bg-light-gray text-dark-green py-2 pl-2 pr-10 w-60 rounded-md focus:outline-dark-green ${inputClassName}`}
+        className={`bg-light-gray text-dark-green py-2 pl-2 pr-10 w-60 rounded-md focus:outline-dark-green placeholder:text-dark-green ${inputClassName}`}
       />
       <img
         src={search}
