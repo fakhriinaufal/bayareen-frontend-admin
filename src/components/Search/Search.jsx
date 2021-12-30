@@ -17,7 +17,7 @@ export default function Search({
     <div className={`relative ${containerClassName}`}>
       <label
         htmlFor={name}
-        className={`text-dark-green pl-1 ${labelClassName}`}
+        className={`text-dark-green ${labelClassName}`}
       ></label>
       <input
         id={name}
