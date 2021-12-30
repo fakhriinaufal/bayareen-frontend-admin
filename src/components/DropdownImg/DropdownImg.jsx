@@ -22,13 +22,13 @@ export default function DropdownImg({
   return (
     <div className={`flex flex-col ${containerClassName}`}>
       <label
-        className={`text-dark-green pl-1 pb-1 ${labelClassName}`}
+        className={`text-dark-green ${labelClassName}`}
         htmlFor={name}
       ></label>
 
       <div
         onClick={() => setShowList((prev) => !prev)}
-        className={`bg-light-gray p-[.6rem] rounded-md flex text-dark-green mb-[.1rem] ${
+        className={`bg-light-gray px-2 py-2 rounded-md flex text-dark-green mb-[.1rem] ${
           showList && "outline outline-2 outline-dark-green"
         }`}
       >
