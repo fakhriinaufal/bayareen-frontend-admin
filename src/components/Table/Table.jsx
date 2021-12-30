@@ -1,0 +1,39 @@
+import React from "react";
+import { tableData, tableHeader } from "./mock";
+import TableCheck from "./TableCheck";
+import TableData from "./TableData";
+
+export default function Table({
+  header = tableHeader,
+  action = true,
+  data = tableData,
+  onDelete,
+  onUpdate,
+}) {
+  return (
+    <div>
+      <table className="table-auto text-center rounded m-10 shadow-md">
+        <thead className="bg-light-gray text-dark-gray">
+          <tr className="border">
+            {header.map((h, i) => {
+              return <TableData key={h} header={true} text={h} />;
+            })}
+            {action && (
+              <th className="border-light-gray border-x-0 px-6 py-3"></th>
+            )}
+          </tr>
+        </thead>
+        <tbody className="border">
+          {data.map((obj, i) => (
+            <tr className="border" key={i}>
+              {Object.values(obj).map((data, j) => {
+                return <TableData key={j} text={data} />;
+              })}
+              {action && <TableCheck />}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
