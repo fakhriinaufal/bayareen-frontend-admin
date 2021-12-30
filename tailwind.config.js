@@ -13,6 +13,9 @@ module.exports = {
         "light-gray": {
           DEFAULT: "#EDF6F9",
         },
+        "dark-gray": {
+          DEFAULT: "#616161",
+        },
       },
       fontFamily: {
         title: ["Rancho"],
