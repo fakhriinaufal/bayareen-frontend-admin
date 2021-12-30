@@ -9,12 +9,15 @@ export default function Table({
   data = tableData,
   onDelete,
   onUpdate,
+  className,
 }) {
   return (
     <div>
-      <table className="table-auto text-center rounded m-10 shadow-md">
+      <table
+        className={`table-auto text-center shadow-md overflow-hidden rounded-lg ${className}`}
+      >
         <thead className="bg-light-gray text-dark-gray">
-          <tr className="border">
+          <tr className="">
             {header.map((h, i) => {
               return <TableData key={h} header={true} text={h} />;
             })}
