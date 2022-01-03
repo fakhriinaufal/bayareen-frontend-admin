@@ -8,8 +8,12 @@ import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
 import Table from "../../components/Table/Table";
+import Login from "../Login/Login";
 
 export default function Admins() {
+  const isLogin = false;
+  if (!isLogin) return <Login />;
+
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
