@@ -10,8 +10,15 @@ import del from "../../assets/icon/delete.svg";
 import update from "../../assets/icon/update.svg";
 import { useState } from "react";
 import Table from "../../components/Table/Table";
+import Login from "../Login/Login";
+import { useNavigate } from "react-router-dom";
 
 export default function Products() {
+  const isLogin = false;
+  if (!isLogin) return <Login />;
+
+  const navigate = useNavigate();
+  
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -57,12 +64,14 @@ export default function Products() {
             icon={add}
             text={"Add Product"}
             className={"w-fit text-base py-3"}
+            onClick={() => navigate("/add-product")}
           />
           <ButtonImg
             alt={"update product"}
             icon={update}
             text={"Update Product"}
             className={"w-fit text-base py-3 bg-blue-600 hover:bg-blue-700"}
+            onClick={() => navigate("/update-product")}
           />
           <ButtonImg
             alt={"delete product"}
