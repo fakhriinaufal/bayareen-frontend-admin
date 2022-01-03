@@ -20,7 +20,7 @@ export default function DropdownImg({
   }
 
   return (
-    <div className={`flex flex-col ${containerClassName}`}>
+    <div className={`flex flex-col relative ${containerClassName}`}>
       <label
         className={`text-dark-green ${labelClassName}`}
         htmlFor={name}
@@ -37,7 +37,7 @@ export default function DropdownImg({
         <img src={down} alt="down" className="flex-none" />
       </div>
       {showList && (
-        <ul className="rounded border transition-all">
+        <ul className="rounded border w-full transition-all absolute bottom-0 translate-y-full">
           {list.map((li) => (
             <DropdownList
               className={listClassName}
