@@ -5,6 +5,8 @@ import Search from "../../components/Search/Search";
 import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
+import { tableHeaderUsers, tableDataUsers } from "../../components/Table/mock";
+
 export default function Users(props) {
   const [sort, setSort] = useState({
     val: null,
@@ -23,8 +25,8 @@ export default function Users(props) {
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="flex-col ml-10 mt-8 mr-10">
-        <div className="text-2xl font-bold text-dark-green">Users</div>
-        <div className="inline-flex mt-4">
+        <div className="text-3xl font-bold text-dark-gray">Users</div>
+        <div className="inline-flex mt-4 mb-8">
           <Search containerClassName={"mr-4"} placeholder={"Search"} />
           <DropdownImg
             icon={sortby}
@@ -35,7 +37,7 @@ export default function Users(props) {
             containerClassName={"w-40"}
           />
         </div>
-        <Table className={"mt-10"} />
+        <Table header={tableHeaderUsers} data={tableDataUsers} action={false} />
       </div>
     </Layout>
   );
