@@ -6,8 +6,12 @@ import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
+import Login from "../Login/Login";
 
 export default function Transactions(props) {
+  const isLogin = false;
+  if (!isLogin) return <Login />;
+
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",

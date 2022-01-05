@@ -6,8 +6,12 @@ import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
 import { tableHeaderUsers, tableDataUsers } from "../../components/Table/mock";
+import Login from "../Login/Login";
 
 export default function Users(props) {
+  const isLogin = false;
+  if (!isLogin) return <Login />;
+
   const [sort, setSort] = useState({
     val: null,
     text: "Latest",
