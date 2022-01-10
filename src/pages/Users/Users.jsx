@@ -5,12 +5,12 @@ import Search from "../../components/Search/Search";
 import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
-import { tableHeaderUsers, tableDataUsers } from "../../components/Table/mock";
 import Login from "../Login/Login";
+import useSubscribeUsers from "../../hooks/useSubscribeUsers";
 
 export default function Users(props) {
-  const isLogin = false;
-  if (!isLogin) return <Login />;
+  // const isLogin = false;
+  // if (!isLogin) return <Login />;
 
   const [sort, setSort] = useState({
     val: null,
@@ -26,6 +26,10 @@ export default function Users(props) {
       val: 2,
     },
   ];
+  const tableHeader = ["ID", "Name", "Phone Number", "Email", "Created At"];
+
+  const { convertUsers, loadingUsers, errorUsers } = useSubscribeUsers();
+
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="flex-col ml-10 mt-8 mr-10">
@@ -41,7 +45,14 @@ export default function Users(props) {
             containerClassName={"w-40"}
           />
         </div>
-        <Table header={tableHeaderUsers} data={tableDataUsers} action={false} />
+        {!loadingUsers && (
+          <Table
+            data={convertUsers}
+            header={tableHeader}
+            error={errorUsers}
+            action={false}
+          />
+        )}
       </div>
     </Layout>
   );
