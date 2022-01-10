@@ -48,7 +48,8 @@ export default function Products() {
     "Category",
     "Created At",
   ];
-  const { convertProducts } = useSubscribeProducts();
+  const { convertProducts, loadingProducts, errorProducts } =
+    useSubscribeProducts();
 
   return (
     <Layout sidebar={<Sidebar />}>
@@ -93,7 +94,13 @@ export default function Products() {
             className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
           />
         </div>
-        <Table data={convertProducts} header={tableHeader} />
+        {!loadingProducts && (
+          <Table
+            data={convertProducts}
+            header={tableHeader}
+            error={errorProducts}
+          />
+        )}
       </div>
     </Layout>
   );
