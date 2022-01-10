@@ -17,3 +17,13 @@ export const subscribeProducts = gql`
     }
   }
 `;
+
+export const subscribeAdmins = gql`
+  subscription MySubscription {
+    admins {
+      id
+      username
+      created_at
+    }
+  }
+`;
