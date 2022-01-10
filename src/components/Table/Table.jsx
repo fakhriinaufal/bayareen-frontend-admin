@@ -6,10 +6,12 @@ export default function Table({
   header,
   action = true,
   data,
+  error,
   onDelete,
   onUpdate,
   className,
 }) {
+  if (error) return <p>Failed to get data ...</p>;
   return (
     <div>
       <table
