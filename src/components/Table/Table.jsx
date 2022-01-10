@@ -1,12 +1,11 @@
 import React from "react";
-import { tableData, tableHeader } from "./mock";
 import TableCheck from "./TableCheck";
 import TableData from "./TableData";
 
 export default function Table({
-  header = tableHeader,
+  header,
   action = true,
-  data = tableData,
+  data,
   onDelete,
   onUpdate,
   className,
@@ -27,7 +26,7 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="border">
-          {data.map((obj, i) => (
+          {data?.map((obj, i) => (
             <tr className="border" key={i}>
               {Object.values(obj).map((data, j) => {
                 return <TableData key={j} text={data} />;
