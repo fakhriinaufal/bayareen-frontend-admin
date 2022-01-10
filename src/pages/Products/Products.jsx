@@ -12,13 +12,14 @@ import { useState } from "react";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
 import { useNavigate } from "react-router-dom";
+import useSubscribeProducts from "../../hooks/useSubscribeProducts";
 
 export default function Products() {
-  const isLogin = false;
-  if (!isLogin) return <Login />;
+  // const isLogin = false;
+  // if (!isLogin) return <Login />;
 
   const navigate = useNavigate();
-  
+
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -37,6 +38,19 @@ export default function Products() {
       val: 2,
     },
   ];
+
+  const tableHeader = [
+    "ID",
+    "Product Name",
+    "Price",
+    "Status",
+    "Provider",
+    "Category",
+    "Created At",
+  ];
+  const { convertProducts, loadingProducts, errorProducts } =
+    useSubscribeProducts();
+
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="ml-10 mt-8 mr-10">
@@ -80,7 +94,13 @@ export default function Products() {
             className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
           />
         </div>
-        <Table />
+        {!loadingProducts && (
+          <Table
+            data={convertProducts}
+            header={tableHeader}
+            error={errorProducts}
+          />
+        )}
       </div>
     </Layout>
   );
