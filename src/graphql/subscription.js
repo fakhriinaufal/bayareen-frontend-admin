@@ -17,3 +17,25 @@ export const subscribeProducts = gql`
     }
   }
 `;
+
+
+
+
+
+
+
+
+
+
+
+export const subscribeUsers = gql`
+subscription MySubscription {
+  users {
+    id
+    name
+    email
+    phone_number
+    created_at
+  }
+}
+`;
