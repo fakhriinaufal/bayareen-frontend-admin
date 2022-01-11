@@ -17,3 +17,48 @@ export const subscribeProducts = gql`
     }
   }
 `;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const subscribeTransactions = gql`
+subscription MySubscription {
+  transactions {
+    id
+    product {
+      name
+      price
+      category {
+        name
+      }
+    }
+    user {
+      name
+    }
+    payment_method {
+      name
+    }
+    created_at
+    status
+  }
+}
+`
