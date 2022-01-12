@@ -17,6 +17,7 @@ import useSubscribeProducts from "../../hooks/useSubscribeProducts";
 export default function Products() {
   // const isLogin = false;
   // if (!isLogin) return <Login />;
+  const [deleteId, setDeleteId] = useState([]);
 
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ export default function Products() {
   ];
   const { convertProducts, loadingProducts, errorProducts } =
     useSubscribeProducts();
-
+  console.log(deleteId);
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="ml-10 mt-8 mr-10">
@@ -81,13 +82,6 @@ export default function Products() {
             onClick={() => navigate("/add-product")}
           />
           <ButtonImg
-            alt={"update product"}
-            icon={update}
-            text={"Update Product"}
-            className={"w-fit text-base py-3 bg-blue-600 hover:bg-blue-700"}
-            onClick={() => navigate("/update-product")}
-          />
-          <ButtonImg
             alt={"delete product"}
             icon={del}
             text={"Delete Product"}
@@ -99,6 +93,8 @@ export default function Products() {
             data={convertProducts}
             header={tableHeader}
             error={errorProducts}
+            setDeleteId={setDeleteId}
+            deleteId={deleteId}
           />
         )}
       </div>

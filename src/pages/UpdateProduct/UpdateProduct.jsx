@@ -4,11 +4,20 @@ import Input from "../../components/Input/Input";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Button from "../../components/Button/Button";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import useGetCategories from "../../hooks/useGetCategories";
+import useGetProviders from "../../hooks/useGetProviders";
 
 export default function UpdateProduct() {
+  const { state } = useLocation();
+  console.log(state);
   const [category, setCategory] = useState({
     val: null,
     text: "Cari category",
+  });
+  const [provider, setProvider] = useState({
+    val: null,
+    text: "Cari provider",
   });
   const [status, setStatus] = useState({
     val: null,
@@ -24,6 +33,19 @@ export default function UpdateProduct() {
       val: 2,
     },
   ];
+  const {
+    categories,
+    loading: loadingCategories,
+    error: errorCategories,
+  } = useGetCategories();
+  const {
+    providers,
+    loading: loadingProv,
+    error: errorProv,
+  } = useGetProviders(category.val);
+
+  const loading = loadingCategories || loadingProv;
+  const error = errorCategories || errorProv;
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="flex-col w-96 ml-12 mt-8 text-dark-green">
@@ -33,12 +55,19 @@ export default function UpdateProduct() {
           <Dropdown
             text={"Product Category"}
             name={"Product Category"}
-            list={mock}
+            list={categories}
             value={category}
             containerClassName={"mt-5"}
             onChange={setCategory}
           />
-          <Input name={"provider"} text={"Provider"} />
+          <Dropdown
+            text={"Providers"}
+            name={"providers"}
+            list={providers}
+            value={provider}
+            containerClassName={"mt-5"}
+            onChange={setProvider}
+          />
           <Input name={"price"} type={"number"} text={"Price"} />
           <Dropdown
             text={"Status"}
