@@ -7,11 +7,23 @@ export default function Table({
   action = true,
   data,
   error,
-  onDelete,
-  onUpdate,
   className,
+  updateId,
+  deleteId,
+  setUpdateId,
+  setDeleteId,
 }) {
   if (error) return <p>Failed to get data ...</p>;
+
+  const handleCheckDelete = (id) => {
+    const found = deleteId.find((idx) => idx === id);
+    console.log(found, "fond");
+    if (found) {
+      setDeleteId((prev) => prev.filter((idx) => idx !== id));
+    } else {
+      setDeleteId((prev) => [...prev, id]);
+    }
+  };
   return (
     <div>
       <table
@@ -19,21 +31,27 @@ export default function Table({
       >
         <thead className="bg-light-gray text-dark-gray">
           <tr className="">
+            {action && (
+              <>
+                <th className="border-light-gray border-x-0 px-6 py-3"></th>
+                <th className="border-light-gray border-x-0 px-6 py-3"></th>
+              </>
+            )}
             {header.map((h, i) => {
               return <TableData key={h} header={true} text={h} />;
             })}
-            {action && (
-              <th className="border-light-gray border-x-0 px-6 py-3"></th>
-            )}
           </tr>
         </thead>
         <tbody className="border">
           {data?.map((obj, i) => (
             <tr className="border" key={i}>
+              {action && (
+                <TableCheck data={obj} onCheck={() => handleCheckDelete(obj.id)} />
+              )}
               {Object.values(obj).map((data, j) => {
                 return <TableData key={j} text={data} />;
               })}
-              {action && <TableCheck />}
+              {console.log(obj, "obj")}
             </tr>
           ))}
         </tbody>
