@@ -7,15 +7,14 @@ export default function useGetProviders(idx) {
   const [providers, setProviders] = useState([]);
 
   let url = `http://localhost:8080/providers?catId=${idx}`;
-  if (idx === null) {
-    return { providers, loading, error };
-  }
 
   useEffect(() => {
+    if (idx === null) {
+      return { providers, loading, error };
+    }
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
         const convertProviders = res.data.data.map((prov) => {
           return {
             text: prov.name,
