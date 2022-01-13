@@ -30,7 +30,7 @@ export const subscribeProducts = gql`
 
 export const subscribeUsers = gql`
 subscription MySubscription {
-  users {
+  users(where: {deleted_at: {_is_null: true}}) {
     id
     name
     email
