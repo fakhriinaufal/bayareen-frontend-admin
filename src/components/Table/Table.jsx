@@ -8,16 +8,13 @@ export default function Table({
   data,
   error,
   className,
-  updateId,
   deleteId,
-  setUpdateId,
   setDeleteId,
 }) {
   if (error) return <p>Failed to get data ...</p>;
 
   const handleCheckDelete = (id) => {
     const found = deleteId.find((idx) => idx === id);
-    console.log(found, "fond");
     if (found) {
       setDeleteId((prev) => prev.filter((idx) => idx !== id));
     } else {
@@ -46,12 +43,11 @@ export default function Table({
           {data?.map((obj, i) => (
             <tr className="border" key={i}>
               {action && (
-                <TableCheck data={obj} onCheck={() => handleCheckDelete(obj.id)} />
+                <TableCheck id={obj.id} onCheck={() => handleCheckDelete(obj.id)} />
               )}
               {Object.values(obj).map((data, j) => {
                 return <TableData key={j} text={data} />;
               })}
-              {console.log(obj, "obj")}
             </tr>
           ))}
         </tbody>

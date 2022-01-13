@@ -3,7 +3,7 @@ import ButtonImg from "../ButtonImg/ButtonImg";
 import update from "../../assets/icon/update.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function TableCheck({ onCheck, data }) {
+export default function TableCheck({ onCheck, id }) {
   const navigate = useNavigate();
   return (
     <>
@@ -15,7 +15,7 @@ export default function TableCheck({ onCheck, data }) {
           alt={"update product"}
           icon={update}
           className={"w-fit text-base px-2 py-2 bg-blue-600 hover:bg-blue-700 "}
-          onClick={() => navigate("/update-product", { state: data })}
+          onClick={() => navigate(`/update-product/${id}`)}
           imgClassName={"mr-0"}
         />
       </td>
