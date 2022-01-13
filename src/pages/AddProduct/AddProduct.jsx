@@ -12,15 +12,14 @@ import useAddProviders from "../../hooks/useAddProviders";
 
 export default function AddProduct() {
   const navigate = useNavigate();
+
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
   const [newProvider, setNewProvider] = useState("");
-
   const [category, setCategory] = useState({
     val: null,
     text: "Cari category",
   });
-
   const [provider, setProvider] = useState({
     val: null,
     text: "Cari provider",
@@ -29,6 +28,7 @@ export default function AddProduct() {
     val: null,
     text: "Cari category",
   });
+
   const {
     categories,
     loading: loadingCategories,
@@ -80,8 +80,7 @@ export default function AddProduct() {
     addProviders(prov);
     navigate("/");
   };
-  console.log(loading, "load");
-  console.log(error, "err");
+
   return (
     <Layout sidebar={<Sidebar />}>
       {!loading && !error && (
@@ -135,7 +134,6 @@ export default function AddProduct() {
                 value={newProvider}
                 onChange={(e) => setNewProvider(e.target.value)}
               />
-
               <Button text="Add Provider" className="mt-10 mx-auto" />
             </form>
           </div>
