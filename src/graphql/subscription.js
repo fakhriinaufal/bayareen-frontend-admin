@@ -20,9 +20,9 @@ export const subscribeProducts = gql`
 
 export const subscribeAdmins = gql`
   subscription MySubscription {
-    admins {
+    admins(where: { deleted_at: { _is_null: true } }) {
       id
-      username
+      name
       created_at
     }
   }

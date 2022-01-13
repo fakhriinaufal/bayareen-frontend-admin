@@ -12,7 +12,7 @@ export default function useSubscribeAdmins() {
   const convertAdmins = dataAdmins?.admins.map((value) => {
     return {
       id: value.id,
-      username: value.username,
+      username: value.name,
       createdAt: value.created_at,
     };
   });
