@@ -17,3 +17,13 @@ export const subscribeProducts = gql`
     }
   }
 `;
+
+export const subscribeAdmins = gql`
+  subscription MySubscription {
+    admins(where: { deleted_at: { _is_null: true } }) {
+      id
+      name
+      created_at
+    }
+  }
+`;
