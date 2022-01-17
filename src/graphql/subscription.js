@@ -17,17 +17,6 @@ export const subscribeProducts = gql`
     }
   }
 `;
-
-
-
-
-
-
-
-
-
-
-
 export const subscribeUsers = gql`
 subscription MySubscription {
   users(where: {deleted_at: {_is_null: true}}) {
@@ -38,4 +27,13 @@ subscription MySubscription {
     created_at
   }
 }
+`;
+export const subscribeAdmins = gql`
+  subscription MySubscription {
+    admins(where: { deleted_at: { _is_null: true } }) {
+      id
+      name
+      created_at
+    }
+  }
 `;

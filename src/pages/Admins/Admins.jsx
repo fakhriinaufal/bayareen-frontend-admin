@@ -9,10 +9,11 @@ import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
+import useSubscribeAdmins from "../../hooks/useSubscribeAdmins";
 
 export default function Admins() {
-  const isLogin = false;
-  if (!isLogin) return <Login />;
+  // const isLogin = false;
+  // if (!isLogin) return <Login />;
 
   const [sort, setSort] = useState({
     val: null,
@@ -30,23 +31,7 @@ export default function Admins() {
   ];
 
   const tableHeader = ["ID", "Username", "Created At"];
-  const tableData = [
-    {
-      id: 1,
-      username: "Admin1",
-      createdAt: "09-12-2021",
-    },
-    {
-      id: 2,
-      username: "Admin1",
-      createdAt: "09-12-2021",
-    },
-    {
-      id: 3,
-      username: "Admin1",
-      createdAt: "09-12-2021",
-    },
-  ];
+  const { convertAdmins, loadingAdmins, errorAdmins } = useSubscribeAdmins();
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="ml-10 mt-8 mr-10">
@@ -74,7 +59,13 @@ export default function Admins() {
             className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
           />
         </div>
-        <Table header={tableHeader} data={tableData} />
+        {!loadingAdmins && (
+          <Table
+            data={convertAdmins}
+            header={tableHeader}
+            error={errorAdmins}
+          />
+        )}
       </div>
     </Layout>
   );
