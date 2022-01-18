@@ -4,53 +4,86 @@ import Input from "../../components/Input/Input";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Button from "../../components/Button/Button";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
+import { useSelector } from "react-redux";
 
 export default function UpdateProduct() {
-  const [category, setCategory] = useState({
-    val: null,
-    text: "Cari category",
-  });
+  const navigate = useNavigate();
+
+  const data = useSelector((state) => state.product.data);
+  const { id } = useParams("id");
+  const updatedData = data.find((i) => i.id === parseInt(id));
+
+  const [productName, setProductName] = useState(updatedData.name);
+  const [price, setPrice] = useState(updatedData.price);
   const [status, setStatus] = useState({
-    val: null,
-    text: "Available",
+    val: updatedData.status === "Available" ? true : false,
+    text: updatedData.status,
   });
-  const mock = [
+  const statusOption = [
     {
-      text: "Option 1",
-      val: 1,
+      text: "Available",
+      val: true,
     },
     {
-      text: "Option 2",
-      val: 2,
+      text: "Unavailable",
+      val: false,
     },
   ];
+
+  const {
+    updateProducts,
+    loading: loadingUpdateProducts,
+    error: errorUpdateProducts,
+  } = useUpdateProducts();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const listProduct = {
+      id: updatedData.id,
+      name: productName,
+      cat_id: updatedData.catId,
+      provider_id: updatedData.provId,
+      price: parseInt(price),
+      status: status.val,
+    };
+    updateProducts(listProduct);
+    navigate("/");
+  };
+
   return (
     <Layout sidebar={<Sidebar />}>
-      <div className="flex-col w-96 ml-12 mt-8 text-dark-green">
-        <div className="text-2xl font-bold">Update Product</div>
-        <form className="" action="">
-          <Input name={"product-name"} text={"Product Name"} />
-          <Dropdown
-            text={"Product Category"}
-            name={"Product Category"}
-            list={mock}
-            value={category}
-            containerClassName={"mt-5"}
-            onChange={setCategory}
-          />
-          <Input name={"provider"} text={"Provider"} />
-          <Input name={"price"} type={"number"} text={"Price"} />
-          <Dropdown
-            text={"Status"}
-            name={"status"}
-            list={mock}
-            value={status}
-            containerClassName={"mt-5"}
-            onChange={setStatus}
-          />
-          <Button text="Submit" className="mt-10" />
-        </form>
-      </div>
+      {!loadingUpdateProducts && !errorUpdateProducts && (
+        <div className="flex-col w-96 ml-12 mt-8 text-dark-green">
+          <div className="text-2xl font-bold">Update Product</div>
+          <form className="" onSubmit={submitHandler}>
+            <Input
+              name={"product-name"}
+              text={"Product Name"}
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+            />
+
+            <Input
+              name={"price"}
+              type={"number"}
+              text={"Price"}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <Dropdown
+              text={"Status"}
+              name={"status"}
+              list={statusOption}
+              value={status}
+              containerClassName={"mt-5"}
+              onChange={setStatus}
+            />
+            <Button text="Submit" className="mt-10" />
+          </form>
+        </div>
+      )}
     </Layout>
   );
 }
