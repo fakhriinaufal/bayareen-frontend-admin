@@ -7,7 +7,7 @@ import sortby from "../../assets/icon/sortby.svg";
 import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
-import useSubscribeTransactions from "../../hooks/useSubscribeTransactions";
+import useGetTransactions from "../../hooks/useGetTransactions";
 
 export default function Transactions(props) {
   // const isLogin = false;
@@ -44,8 +44,7 @@ export default function Transactions(props) {
   ];
 
   const { convertTransactions, loadingTransactions, errorTransactions } =
-    useSubscribeTransactions();
-  
+    useGetTransactions();
 
   return (
     <Layout sidebar={<Sidebar />}>
