@@ -7,19 +7,19 @@ import filterby from "../../assets/icon/filter.svg";
 import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
-import update from "../../assets/icon/update.svg";
 import { useState } from "react";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
 import { useNavigate } from "react-router-dom";
 import useSubscribeProducts from "../../hooks/useSubscribeProducts";
+import useDeleteProducts from "../../hooks/useDeleteProducts";
 
 export default function Products() {
   // const isLogin = false;
   // if (!isLogin) return <Login />;
 
   const navigate = useNavigate();
-
+  const [deleteId, setDeleteId] = useState([]);
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -48,9 +48,18 @@ export default function Products() {
     "Category",
     "Created At",
   ];
-  const { convertProducts, loadingProducts, errorProducts } =
+  const { displayProducts, loadingProducts, errorProducts } =
     useSubscribeProducts();
 
+  const {
+    deleteProducts,
+    loading: loadingDelProducts,
+    error: errorDelProducts,
+  } = useDeleteProducts();
+
+  const loading = loadingProducts || loadingDelProducts;
+  const error = errorProducts || errorDelProducts;
+  
   return (
     <Layout sidebar={<Sidebar />}>
       <div className="ml-10 mt-8 mr-10">
@@ -81,24 +90,20 @@ export default function Products() {
             onClick={() => navigate("/add-product")}
           />
           <ButtonImg
-            alt={"update product"}
-            icon={update}
-            text={"Update Product"}
-            className={"w-fit text-base py-3 bg-blue-600 hover:bg-blue-700"}
-            onClick={() => navigate("/update-product")}
-          />
-          <ButtonImg
             alt={"delete product"}
             icon={del}
             text={"Delete Product"}
             className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
+            onClick={() => deleteProducts({ id: deleteId })}
           />
         </div>
-        {!loadingProducts && (
+        {!loading && !error && (
           <Table
-            data={convertProducts}
+            data={displayProducts}
             header={tableHeader}
-            error={errorProducts}
+            error={error}
+            setDeleteId={setDeleteId}
+            deleteId={deleteId}
           />
         )}
       </div>
