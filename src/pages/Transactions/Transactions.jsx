@@ -7,10 +7,11 @@ import sortby from "../../assets/icon/sortby.svg";
 import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
+import useGetTransactions from "../../hooks/useGetTransactions";
 
 export default function Transactions(props) {
-  const isLogin = false;
-  if (!isLogin) return <Login />;
+  // const isLogin = false;
+  // if (!isLogin) return <Login />;
 
   const [sort, setSort] = useState({
     val: null,
@@ -41,38 +42,9 @@ export default function Transactions(props) {
     "Created At",
     "Status",
   ];
-  const tableData = [
-    {
-      id: 1,
-      productName: "Pulsa Telkomsel 10.000",
-      price: 12000,
-      user: "Lorem Ipsum",
-      category: "Pulsa",
-      paymentMethod: "SHOPEEPAY",
-      createdAt: "09-12-2021",
-      status: "SUCCESS",
-    },
-    {
-      id: 2,
-      productName: "Pulsa Telkomsel 10.000",
-      price: 12000,
-      user: "Lorem Ipsum",
-      category: "Pulsa",
-      paymentMethod: "SHOPEEPAY",
-      createdAt: "09-12-2021",
-      status: "SUCCESS",
-    },
-    {
-      id: 3,
-      productName: "Pulsa Telkomsel 10.000",
-      price: 12000,
-      user: "Lorem Ipsum",
-      category: "Pulsa",
-      paymentMethod: "SHOPEEPAY",
-      createdAt: "09-12-2021",
-      status: "SUCCESS",
-    },
-  ];
+
+  const { convertTransactions, loadingTransactions, errorTransactions } =
+    useGetTransactions();
 
   return (
     <Layout sidebar={<Sidebar />}>
@@ -97,7 +69,14 @@ export default function Transactions(props) {
             containerClassName={"w-40"}
           />
         </div>
-        <Table header={tableHeader} data={tableData} action={false} />
+        {!loadingTransactions && (
+          <Table
+            data={convertTransactions}
+            header={tableHeader}
+            error={errorTransactions}
+            action={false}
+          />
+        )}
       </div>
     </Layout>
   );
