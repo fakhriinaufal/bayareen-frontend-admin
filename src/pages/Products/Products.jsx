@@ -13,6 +13,7 @@ import Login from "../Login/Login";
 import { useNavigate } from "react-router-dom";
 import useSubscribeProducts from "../../hooks/useSubscribeProducts";
 import useDeleteProducts from "../../hooks/useDeleteProducts";
+import ReactLoading from "react-loading";
 
 export default function Products() {
   // const isLogin = false;
@@ -59,45 +60,53 @@ export default function Products() {
 
   const loading = loadingProducts || loadingDelProducts;
   const error = errorProducts || errorDelProducts;
-  
+
   return (
     <Layout sidebar={<Sidebar />}>
-      <div className="ml-10 mt-8 mr-10">
-        <h2 className="text-3xl font-bold text-dark-gray">Products</h2>
-        <div className="my-5 flex items-start gap-4">
-          <Search placeholder={"Search"} />
-          <DropdownImg
-            icon={sortby}
-            name={"sort"}
-            list={mock}
-            value={sort}
-            onChange={setSort}
-            containerClassName={"w-40"}
-          />
-          <DropdownImg
-            icon={filterby}
-            name={"filter"}
-            list={mock}
-            value={filter}
-            onChange={setFilter}
-            containerClassName={"w-40 mr-14"}
-          />
-          <ButtonImg
-            alt={"add product"}
-            icon={add}
-            text={"Add Product"}
-            className={"w-fit text-base py-3"}
-            onClick={() => navigate("/add-product")}
-          />
-          <ButtonImg
-            alt={"delete product"}
-            icon={del}
-            text={"Delete Product"}
-            className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
-            onClick={() => deleteProducts({ id: deleteId })}
-          />
-        </div>
-        {!loading && !error && (
+      {loading ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
+        <div className="ml-10 mt-8 mr-10">
+          <h2 className="text-3xl font-bold text-dark-gray">Products</h2>
+          <div className="my-5 flex items-start gap-4">
+            <Search placeholder={"Search"} />
+            <DropdownImg
+              icon={sortby}
+              name={"sort"}
+              list={mock}
+              value={sort}
+              onChange={setSort}
+              containerClassName={"w-40"}
+            />
+            <DropdownImg
+              icon={filterby}
+              name={"filter"}
+              list={mock}
+              value={filter}
+              onChange={setFilter}
+              containerClassName={"w-40 mr-14"}
+            />
+            <ButtonImg
+              alt={"add product"}
+              icon={add}
+              text={"Add Product"}
+              className={"w-fit text-base py-3"}
+              onClick={() => navigate("/add-product")}
+            />
+            <ButtonImg
+              alt={"delete product"}
+              icon={del}
+              text={"Delete Product"}
+              className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
+              onClick={() => deleteProducts({ id: deleteId })}
+            />
+          </div>
           <Table
             data={displayProducts}
             header={tableHeader}
@@ -105,8 +114,8 @@ export default function Products() {
             setDeleteId={setDeleteId}
             deleteId={deleteId}
           />
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 }
