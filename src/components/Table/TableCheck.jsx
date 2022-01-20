@@ -3,12 +3,12 @@ import ButtonImg from "../ButtonImg/ButtonImg";
 import update from "../../assets/icon/update.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function TableCheck({ onCheck, id }) {
+export default function TableCheck({ onCheck, id, isChecked }) {
   const navigate = useNavigate();
   return (
     <>
       <td className="px-5 py-3">
-        <input onChange={onCheck} type="checkbox" />
+        <input onChange={onCheck} type="checkbox" checked={isChecked} />
       </td>
       <td>
         <ButtonImg
