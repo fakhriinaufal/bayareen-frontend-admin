@@ -9,6 +9,7 @@ import useGetCategories from "../../hooks/useGetCategories";
 import useGetProviders from "../../hooks/useGetProviders";
 import useAddProducts from "../../hooks/useAddProducts";
 import useAddProviders from "../../hooks/useAddProviders";
+import ReactLoading from "react-loading";
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -83,7 +84,16 @@ export default function AddProduct() {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      {!loading && !error && (
+      {error && <p>{error}</p>}
+      {loading ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
         <div className="flex-col ml-12 mt-8 text-dark-green">
           <div className="text-2xl font-bold">Add New Product</div>
           <div className="flex justify-between">

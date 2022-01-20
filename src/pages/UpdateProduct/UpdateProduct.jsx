@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useUpdateProducts from "../../hooks/useUpdateProducts";
 import { useSelector } from "react-redux";
+import ReactLoading from "react-loading";
 
 export default function UpdateProduct() {
   const navigate = useNavigate();
@@ -54,7 +55,16 @@ export default function UpdateProduct() {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      {!loadingUpdateProducts && !errorUpdateProducts && (
+      {errorUpdateProducts && <p>{errorUpdateProducts}</p>}
+      {loadingUpdateProducts ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
         <div className="flex-col w-96 ml-12 mt-8 text-dark-green">
           <div className="text-2xl font-bold">Update Product</div>
           <form className="" onSubmit={submitHandler}>
