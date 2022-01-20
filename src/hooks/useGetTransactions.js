@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { getTransactions } from "../graphql/query";
+import moment from "moment";
 
 export default function useSubscribeProducts() {
   const {
@@ -13,7 +14,6 @@ export default function useSubscribeProducts() {
     convertedPayment[dataTransactions?.payment_methods[i].id] =
       dataTransactions?.payment_methods[i].payment_channel;
   }
-  console.log(convertedPayment, "converpayment");
 
   const convertTransactions = dataTransactions?.transactions.map((value) => {
     return {
@@ -30,6 +30,16 @@ export default function useSubscribeProducts() {
       status: value.status,
     };
   });
+
+  if (!loadingTransactions) {
+    let dateObj;
+    let momentObj;
+    for (let i = 0; i < convertTransactions.length; i++) {
+      dateObj = new Date(convertTransactions[i].createdAt);
+      momentObj = moment(dateObj);
+      convertTransactions[i].createdAt = momentObj.format("lll");
+    }
+  }
 
   return {
     convertTransactions,
