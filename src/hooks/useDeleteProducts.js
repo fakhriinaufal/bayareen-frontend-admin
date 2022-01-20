@@ -7,7 +7,6 @@ export default function useDeleteProducts() {
 
   const deleteProducts = (product) => {
     setLoading(true);
-    console.log(product);
     axios
       .delete(`http://localhost:8080/products`, { data: product })
       .then((res) => {

@@ -10,7 +10,6 @@ export default function useGetCategories() {
     axios
       .get("http://localhost:8080/categories")
       .then((res) => {
-        console.log(res);
         const filterCategories = res.data.data.filter(
           (cat) => cat.name === "Pulsa" || cat.name === "Paket"
         );
