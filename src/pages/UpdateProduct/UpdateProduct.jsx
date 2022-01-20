@@ -22,6 +22,7 @@ export default function UpdateProduct() {
     val: updatedData.status === "Available" ? true : false,
     text: updatedData.status,
   });
+  const [err, setErr] = useState("");
   const statusOption = [
     {
       text: "Available",
@@ -41,6 +42,11 @@ export default function UpdateProduct() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (productName === "" || price === "" || price === "0") {
+      setErr("Each field must be filled");
+      return;
+    }
+    setErr("");
     const listProduct = {
       id: updatedData.id,
       name: productName,
@@ -74,7 +80,6 @@ export default function UpdateProduct() {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
-
             <Input
               name={"price"}
               type={"number"}
@@ -90,6 +95,7 @@ export default function UpdateProduct() {
               containerClassName={"mt-5"}
               onChange={setStatus}
             />
+            {<p className="text-red-500">{err}</p>}
             <Button text="Submit" className="mt-10" />
           </form>
         </div>

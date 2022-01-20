@@ -17,6 +17,9 @@ export default function AddProduct() {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
   const [newProvider, setNewProvider] = useState("");
+  const [err, setErr] = useState("");
+  const [err2, setErr2] = useState("");
+
   const [category, setCategory] = useState({
     val: null,
     text: "Cari category",
@@ -61,6 +64,16 @@ export default function AddProduct() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (
+      provider.val === null ||
+      category.val === null ||
+      productName === "" ||
+      price === 0
+    ) {
+      setErr("Each field must be filled");
+      return;
+    }
+    setErr("");
     const listProduct = {
       provider_id: provider.val,
       cat_id: category.val,
@@ -74,8 +87,13 @@ export default function AddProduct() {
 
   const addProviderHandler = (e) => {
     e.preventDefault();
+    if (newProvider === "" || category2.val === null) {
+      setErr2("Each field must be filled");
+      return;
+    }
+    setErr2("");
     const prov = {
-      cat_id: category.val,
+      cat_id: category2.val,
       name: newProvider,
     };
     addProviders(prov);
@@ -127,6 +145,7 @@ export default function AddProduct() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
+              {<p className="text-red-500">{err}</p>}
               <Button text="Submit" className="mt-10 mx-auto" />
             </form>
             <form className="w-[30em] mr-24" onSubmit={addProviderHandler}>
@@ -144,6 +163,7 @@ export default function AddProduct() {
                 value={newProvider}
                 onChange={(e) => setNewProvider(e.target.value)}
               />
+              {<p className="text-red-500">{err2}</p>}
               <Button text="Add Provider" className="mt-10 mx-auto" />
             </form>
           </div>
