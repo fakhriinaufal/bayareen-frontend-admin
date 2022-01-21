@@ -6,8 +6,47 @@ import Users from "./pages/Users/Users";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Login from "./pages/Login/Login";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useState, useEffect } from "react";
+import ReactLoading from "react-loading";
 
 function App() {
+  const [cookies, setCookies] = useCookies(["token"]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (cookies.token !== null) {
+      const instance = axios.create({
+        baseURL: "http://localhost:8080/admins/auth",
+        timeout: 1000,
+        headers: { Authorization: `bearer ${cookies.token}` },
+      });
+      instance
+        .get()
+        .then(() => {
+          dispatch(login());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          setLoading(false);
+        });
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <ReactLoading
+        type={"spokes"}
+        color={"#83C5BE"}
+        height={175}
+        width={175}
+        className="mx-auto mt-32"
+      />
+    );
+  }
+
   return (
     <>
       <Routes>
