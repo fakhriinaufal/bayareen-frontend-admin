@@ -7,6 +7,7 @@ import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
 import useSubscribeUsers from "../../hooks/useSubscribeUsers";
+import ReactLoading from "react-loading";
 
 export default function Users(props) {
   // const isLogin = false;
@@ -32,28 +33,36 @@ export default function Users(props) {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      <div className="flex-col ml-10 mt-8 mr-10">
-        <div className="text-3xl font-bold text-dark-gray">Users</div>
-        <div className="inline-flex mt-4 mb-8">
-          <Search containerClassName={"mr-4"} placeholder={"Search"} />
-          <DropdownImg
-            icon={sortby}
-            name={"sort"}
-            list={mock}
-            value={sort}
-            onChange={setSort}
-            containerClassName={"w-40"}
-          />
-        </div>
-        {!loadingUsers && (
+      {loadingUsers ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
+        <div className="flex-col ml-10 mt-8 mr-10">
+          <div className="text-3xl font-bold text-dark-gray">Users</div>
+          <div className="inline-flex mt-4 mb-8">
+            <Search containerClassName={"mr-4"} placeholder={"Search"} />
+            <DropdownImg
+              icon={sortby}
+              name={"sort"}
+              list={mock}
+              value={sort}
+              onChange={setSort}
+              containerClassName={"w-40"}
+            />
+          </div>
           <Table
             data={convertUsers}
             header={tableHeader}
             error={errorUsers}
             action={false}
           />
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 }

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useUpdateProducts from "../../hooks/useUpdateProducts";
 import { useSelector } from "react-redux";
+import ReactLoading from "react-loading";
 
 export default function UpdateProduct() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function UpdateProduct() {
     val: updatedData.status === "Available" ? true : false,
     text: updatedData.status,
   });
+  const [err, setErr] = useState("");
   const statusOption = [
     {
       text: "Available",
@@ -40,6 +42,11 @@ export default function UpdateProduct() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (productName === "" || price === "" || price === "0") {
+      setErr("Each field must be filled");
+      return;
+    }
+    setErr("");
     const listProduct = {
       id: updatedData.id,
       name: productName,
@@ -54,7 +61,16 @@ export default function UpdateProduct() {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      {!loadingUpdateProducts && !errorUpdateProducts && (
+      {errorUpdateProducts && <p>{errorUpdateProducts}</p>}
+      {loadingUpdateProducts ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
         <div className="flex-col w-96 ml-12 mt-8 text-dark-green">
           <div className="text-2xl font-bold">Update Product</div>
           <form className="" onSubmit={submitHandler}>
@@ -64,7 +80,6 @@ export default function UpdateProduct() {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
             />
-
             <Input
               name={"price"}
               type={"number"}
@@ -80,6 +95,7 @@ export default function UpdateProduct() {
               containerClassName={"mt-5"}
               onChange={setStatus}
             />
+            {<p className="text-red-500">{err}</p>}
             <Button text="Submit" className="mt-10" />
           </form>
         </div>

@@ -9,8 +9,7 @@ export default function useUpdateProducts() {
     setLoading(true);
     axios
       .patch(`http://localhost:8080/products/${product.id}`, product)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setLoading(false);
       })
       .catch((error) => {

@@ -8,6 +8,7 @@ import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
 import Login from "../Login/Login";
 import useGetTransactions from "../../hooks/useGetTransactions";
+import ReactLoading from "react-loading";
 
 export default function Transactions(props) {
   // const isLogin = false;
@@ -48,36 +49,44 @@ export default function Transactions(props) {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      <div className="flex-col ml-10 mt-8 mr-10">
-        <h2 className="text-3xl font-bold text-dark-gray">Transactions</h2>
-        <div className="inline-flex mt-4 mb-8">
-          <Search containerClassName={"mr-4"} placeholder={"Search"} />
-          <DropdownImg
-            icon={sortby}
-            name={"sort"}
-            list={mock}
-            value={sort}
-            onChange={setSort}
-            containerClassName={"w-40 mr-4"}
-          />
-          <DropdownImg
-            icon={filterIcn}
-            name={"sort"}
-            list={mock}
-            value={filter}
-            onChange={setFilter}
-            containerClassName={"w-40"}
-          />
-        </div>
-        {!loadingTransactions && (
+      {loadingTransactions ? (
+        <ReactLoading
+          type={"spokes"}
+          color={"#83C5BE"}
+          height={175}
+          width={175}
+          className="mx-auto mt-24"
+        />
+      ) : (
+        <div className="flex-col ml-10 mt-8 mr-10">
+          <h2 className="text-3xl font-bold text-dark-gray">Transactions</h2>
+          <div className="inline-flex mt-4 mb-8">
+            <Search containerClassName={"mr-4"} placeholder={"Search"} />
+            <DropdownImg
+              icon={sortby}
+              name={"sort"}
+              list={mock}
+              value={sort}
+              onChange={setSort}
+              containerClassName={"w-40 mr-4"}
+            />
+            <DropdownImg
+              icon={filterIcn}
+              name={"sort"}
+              list={mock}
+              value={filter}
+              onChange={setFilter}
+              containerClassName={"w-40"}
+            />
+          </div>
           <Table
             data={convertTransactions}
             header={tableHeader}
             error={errorTransactions}
             action={false}
           />
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 }

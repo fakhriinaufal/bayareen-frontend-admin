@@ -1,7 +1,6 @@
 import React from "react";
 import bayareen from "../../assets/icon/bayareen.svg";
 import user from "../../assets/icon/user.svg";
-import admin from "../../assets/icon/admin.svg";
 import product from "../../assets/icon/product.svg";
 import transaction from "../../assets/icon/transaction.svg";
 import { Link } from "react-router-dom";
@@ -29,12 +28,6 @@ export default function Sidebar() {
           <Link className="flex gap-2" to={"/transactions"}>
             <img src={transaction} alt="" />
             <p className="text-white font-semibold">Transactions</p>
-          </Link>
-        </li>
-        <li>
-          <Link className="flex gap-2" to={"/admins"}>
-            <img src={admin} alt="" />
-            <p className="text-white font-semibold">Admins</p>
           </Link>
         </li>
       </ul>

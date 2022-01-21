@@ -1,5 +1,6 @@
 import { useSubscription } from "@apollo/client";
 import { subscribeUsers } from "../graphql/subscription";
+import moment from "moment";
 
 export default function useSubscribeUsers() {
   const {
@@ -17,6 +18,16 @@ export default function useSubscribeUsers() {
       created_at: value.created_at,
     };
   });
+
+  if (!loadingUsers) {
+    let dateObj;
+    let momentObj;
+    for (let i = 0; i < convertUsers.length; i++) {
+      dateObj = new Date(convertUsers[i].created_at);
+      momentObj = moment(dateObj);
+      convertUsers[i].created_at = momentObj.format("lll");
+    }
+  }
 
   return {
     convertUsers,

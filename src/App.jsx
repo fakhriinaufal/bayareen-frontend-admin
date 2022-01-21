@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Products from "./pages/Products/Products";
-import Admins from "./pages/Admins/Admins";
 import Transactions from "./pages/Transactions/Transactions";
 import Users from "./pages/Users/Users";
 import AddProduct from "./pages/AddProduct/AddProduct";
@@ -14,7 +13,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Products />} />
-        <Route path="/admins" element={<Admins />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/users" element={<Users />} />
         <Route path="/add-product" element={<AddProduct />} />

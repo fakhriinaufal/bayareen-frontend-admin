@@ -1,6 +1,8 @@
 import React from "react";
 import TableCheck from "./TableCheck";
 import TableData from "./TableData";
+import ReactPaginate from "react-paginate";
+import { useState } from "react";
 
 export default function Table({
   header,
@@ -11,6 +13,41 @@ export default function Table({
   deleteId,
   setDeleteId,
 }) {
+  let objectDeleteId = {};
+  if (deleteId !== undefined) {
+    for (let i = 0; i < deleteId.length; i++) {
+      objectDeleteId[deleteId[i]] = true;
+    }
+  }
+
+  const [pageNumber, setPageNumber] = useState(0);
+  const datasPerPage = 10;
+  const pageVisited = pageNumber * datasPerPage;
+  const pageCount = Math.ceil(data?.length / datasPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
+  const displayDatas = data
+    ?.slice(pageVisited, pageVisited + datasPerPage)
+    .map((obj, i) => {
+      return (
+        <tr className="border" key={i}>
+          {action && (
+            <TableCheck
+              id={obj.id}
+              onCheck={() => handleCheckDelete(obj.id)}
+              isChecked={objectDeleteId[obj.id] !== undefined}
+            />
+          )}
+          {Object.values(obj).map((data, j) => {
+            return <TableData key={j} text={data} />;
+          })}
+        </tr>
+      );
+    });
+
   if (error) return <p>Failed to get data ...</p>;
 
   const handleCheckDelete = (id) => {
@@ -40,18 +77,42 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="border">
-          {data?.map((obj, i) => (
+          {/* {data?.map((obj, i) => (
             <tr className="border" key={i}>
               {action && (
-                <TableCheck id={obj.id} onCheck={() => handleCheckDelete(obj.id)} />
+                <TableCheck
+                  id={obj.id}
+                  onCheck={() => handleCheckDelete(obj.id)}
+                />
               )}
               {Object.values(obj).map((data, j) => {
                 return <TableData key={j} text={data} />;
               })}
             </tr>
-          ))}
+          ))} */}
+          {displayDatas}
         </tbody>
       </table>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"flex justify-center list-none my-5"}
+        pageLinkClassName={
+          "border px-3 py-1 mx-1 hover:bg-light-green hover:text-white rounded"
+        }
+        previousLinkClassName={
+          "border px-3 py-1 mx-1 hover:bg-light-green hover:text-white rounded"
+        }
+        nextLinkClassName={
+          "border px-3 py-1 mx-1 hover:bg-light-green hover:text-white rounded"
+        }
+        activeLinkClassName={"bg-light-green text-white"}
+        disabledLinkClassName={
+          "text-gray-500 hover:text-gray-500 hover:bg-white hover:cursor-default"
+        }
+      />
     </div>
   );
 }

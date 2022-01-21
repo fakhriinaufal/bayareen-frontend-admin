@@ -2,6 +2,7 @@ import { useSubscription } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { subscribeProducts } from "../graphql/subscription";
 import { setData } from "../store/productSlice";
+import moment from "moment";
 
 export default function useSubscribeProducts() {
   const dispatch = useDispatch();
@@ -24,8 +25,19 @@ export default function useSubscribeProducts() {
       provId: value.provider.id,
     };
   });
-  dispatch(setData(convertProducts));
   
+  if (!loadingProducts) {
+    let dateObj;
+    let momentObj;
+    for (let i = 0; i < convertProducts.length; i++) {
+      dateObj = new Date(convertProducts[i].createdAt);
+      momentObj = moment(dateObj);
+      convertProducts[i].createdAt = momentObj.format("lll");
+    }
+  }
+
+  dispatch(setData(convertProducts));
+
   const displayProducts = convertProducts?.map((value) => {
     return {
       id: value.id,
@@ -37,6 +49,7 @@ export default function useSubscribeProducts() {
       createdAt: value.createdAt,
     };
   });
+
   return {
     displayProducts,
     loadingProducts,
