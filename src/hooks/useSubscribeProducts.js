@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { subscribeProducts } from "../graphql/subscription";
 import { setData } from "../store/productSlice";
 import moment from "moment";
+import { useEffect } from "react";
 
 export default function useSubscribeProducts() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function useSubscribeProducts() {
       provId: value.provider.id,
     };
   });
-  
+
   if (!loadingProducts) {
     let dateObj;
     let momentObj;
@@ -35,8 +36,6 @@ export default function useSubscribeProducts() {
       convertProducts[i].createdAt = momentObj.format("lll");
     }
   }
-
-  dispatch(setData(convertProducts));
 
   const displayProducts = convertProducts?.map((value) => {
     return {
@@ -49,6 +48,10 @@ export default function useSubscribeProducts() {
       createdAt: value.createdAt,
     };
   });
+
+  useEffect(() => {
+    dispatch(setData(convertProducts));
+  }, [convertProducts]);
 
   return {
     displayProducts,
