@@ -6,13 +6,10 @@ import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
-import Login from "../Login/Login";
 import useGetTransactions from "../../hooks/useGetTransactions";
 import ReactLoading from "react-loading";
 
-export default function Transactions(props) {
-  // const isLogin = false;
-  // if (!isLogin) return <Login />;
+export default function Transactions() {
 
   const [sort, setSort] = useState({
     val: null,

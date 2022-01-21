@@ -5,13 +5,10 @@ import Search from "../../components/Search/Search";
 import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
-import Login from "../Login/Login";
 import useSubscribeUsers from "../../hooks/useSubscribeUsers";
 import ReactLoading from "react-loading";
 
-export default function Users(props) {
-  // const isLogin = false;
-  // if (!isLogin) return <Login />;
+export default function Users() {
 
   const [sort, setSort] = useState({
     val: null,
