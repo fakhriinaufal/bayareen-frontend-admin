@@ -3,7 +3,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Input from "../../components/Input/Input";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Button from "../../components/Button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGetCategories from "../../hooks/useGetCategories";
 import useGetProviders from "../../hooks/useGetProviders";
@@ -11,7 +11,7 @@ import useAddProducts from "../../hooks/useAddProducts";
 import useAddProviders from "../../hooks/useAddProviders";
 import ReactLoading from "react-loading";
 
-export default function AddProduct() {
+export default function AddProduct({ refetch }) {
   const navigate = useNavigate();
 
   const [productName, setProductName] = useState("");
@@ -19,6 +19,7 @@ export default function AddProduct() {
   const [newProvider, setNewProvider] = useState("");
   const [err, setErr] = useState("");
   const [err2, setErr2] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [category, setCategory] = useState({
     val: null,
@@ -82,7 +83,8 @@ export default function AddProduct() {
       status: true,
     };
     addProducts(listProduct);
-    navigate("/");
+    refetch();
+    setIsSubmitted(true);
   };
 
   const addProviderHandler = (e) => {
@@ -97,8 +99,15 @@ export default function AddProduct() {
       name: newProvider,
     };
     addProviders(prov);
-    navigate("/");
+    refetch();
+    setIsSubmitted(true);
   };
+
+  useEffect(() => {
+    if (!error && !loading && isSubmitted) {
+      navigate("/");
+    }
+  }, [isSubmitted, error, loading]);
 
   return (
     <Layout sidebar={<Sidebar />}>

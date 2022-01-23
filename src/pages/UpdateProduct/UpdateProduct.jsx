@@ -3,19 +3,20 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Input from "../../components/Input/Input";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Button from "../../components/Button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useUpdateProducts from "../../hooks/useUpdateProducts";
 import { useSelector } from "react-redux";
 import ReactLoading from "react-loading";
 
-export default function UpdateProduct() {
+export default function UpdateProduct({ refetch }) {
   const navigate = useNavigate();
 
   const data = useSelector((state) => state.product.data);
   const { id } = useParams("id");
   const updatedData = data.find((i) => i.id === parseInt(id));
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [productName, setProductName] = useState(updatedData.name);
   const [price, setPrice] = useState(updatedData.price);
   const [status, setStatus] = useState({
@@ -56,8 +57,15 @@ export default function UpdateProduct() {
       status: status.val,
     };
     updateProducts(listProduct);
-    navigate("/");
+    refetch();
+    setIsSubmitted(true);
   };
+
+  useEffect(() => {
+    if (!errorUpdateProducts && !loadingUpdateProducts && isSubmitted) {
+      navigate("/");
+    }
+  }, [isSubmitted, errorUpdateProducts, loadingUpdateProducts]);
 
   return (
     <Layout sidebar={<Sidebar />}>
