@@ -7,28 +7,37 @@ import filterby from "../../assets/icon/filter.svg";
 import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../components/Table/Table";
-import Login from "../Login/Login";
 import { useNavigate } from "react-router-dom";
-import useSubscribeProducts from "../../hooks/useSubscribeProducts";
 import useDeleteProducts from "../../hooks/useDeleteProducts";
 import ReactLoading from "react-loading";
 
-export default function Products() {
-  // const isLogin = false;
-  // if (!isLogin) return <Login />;
-
+export default function Products({
+  sort,
+  setSort,
+  displayProducts,
+  loadingProducts,
+  errorProducts,
+  refetch,
+}) {
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState([]);
-  const [sort, setSort] = useState({
-    val: null,
-    text: "Sort By",
-  });
+
   const [filter, setFilter] = useState({
     val: null,
     text: "Filter By",
   });
+  const listSort = [
+    {
+      text: "Oldest",
+      val: "asc",
+    },
+    {
+      text: "Latest",
+      val: "desc",
+    },
+  ];
   const mock = [
     {
       text: "Option 1",
@@ -49,8 +58,6 @@ export default function Products() {
     "Category",
     "Created At",
   ];
-  const { displayProducts, loadingProducts, errorProducts } =
-    useSubscribeProducts();
 
   const {
     deleteProducts,
@@ -58,8 +65,20 @@ export default function Products() {
     error: errorDelProducts,
   } = useDeleteProducts();
 
+  const deleteHandler = () => {
+    deleteProducts({ id: deleteId });
+    refetch();
+  };
+
   const loading = loadingProducts || loadingDelProducts;
+  console.log(loadingDelProducts, "loandpro");
   const error = errorProducts || errorDelProducts;
+
+  useEffect(() => {
+    refetch({
+      created_at: sort.val,
+    });
+  }, [sort.val]);
 
   return (
     <Layout sidebar={<Sidebar />}>
@@ -79,7 +98,7 @@ export default function Products() {
             <DropdownImg
               icon={sortby}
               name={"sort"}
-              list={mock}
+              list={listSort}
               value={sort}
               onChange={setSort}
               containerClassName={"w-40"}
@@ -104,7 +123,7 @@ export default function Products() {
               icon={del}
               text={"Delete Product"}
               className={"w-fit text-base py-3 bg-red-600 hover:bg-red-700"}
-              onClick={() => deleteProducts({ id: deleteId })}
+              onClick={deleteHandler}
             />
           </div>
           <Table

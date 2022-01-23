@@ -6,22 +6,32 @@ import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
-import Login from "../Login/Login";
-import useGetTransactions from "../../hooks/useGetTransactions";
 import ReactLoading from "react-loading";
+import { useEffect } from "react";
 
-export default function Transactions(props) {
-  // const isLogin = false;
-  // if (!isLogin) return <Login />;
-
-  const [sort, setSort] = useState({
-    val: null,
-    text: "Sort By",
-  });
+export default function Transactions({
+  sort,
+  setSort,
+  convertTransactions,
+  loadingTransactions,
+  errorTransactions,
+  refetch,
+}) {
   const [filter, setFilter] = useState({
     val: null,
     text: "Filter",
   });
+  const listSort = [
+    {
+      text: "Oldest",
+      val: "asc",
+    },
+    {
+      text: "Latest",
+      val: "desc",
+    },
+  ];
+
   const mock = [
     {
       text: "Option 1",
@@ -44,8 +54,11 @@ export default function Transactions(props) {
     "Status",
   ];
 
-  const { convertTransactions, loadingTransactions, errorTransactions } =
-    useGetTransactions();
+  useEffect(() => {
+    refetch({
+      created_at: sort.val,
+    });
+  }, [sort.val]);
 
   return (
     <Layout sidebar={<Sidebar />}>
@@ -65,7 +78,7 @@ export default function Transactions(props) {
             <DropdownImg
               icon={sortby}
               name={"sort"}
-              list={mock}
+              list={listSort}
               value={sort}
               onChange={setSort}
               containerClassName={"w-40 mr-4"}
