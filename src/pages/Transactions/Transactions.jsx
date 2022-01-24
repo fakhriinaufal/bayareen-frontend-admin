@@ -31,7 +31,6 @@ export default function Transactions({
       val: "desc",
     },
   ];
-
   const mock = [
     {
       text: "Option 1",

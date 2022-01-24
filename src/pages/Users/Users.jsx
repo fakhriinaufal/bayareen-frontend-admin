@@ -17,10 +17,14 @@ export default function Users({
 }) {
   const listSort = [
     {
+      text: "Option 1",
+      val: 1,
       text: "Oldest",
       val: "asc",
     },
     {
+      text: "Option 2",
+      val: 2,
       text: "Latest",
       val: "desc",
     },

@@ -7,8 +7,8 @@ import filterby from "../../assets/icon/filter.svg";
 import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
-import { useEffect, useState } from "react";
 import Table from "../../components/Table/Table";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteProducts from "../../hooks/useDeleteProducts";
 import ReactLoading from "react-loading";
@@ -22,22 +22,13 @@ export default function Products({
   refetch,
 }) {
   const navigate = useNavigate();
-  const [deleteId, setDeleteId] = useState([]);
 
+  const [deleteId, setDeleteId] = useState([]);
+ 
   const [filter, setFilter] = useState({
     val: null,
     text: "Filter By",
   });
-  const listSort = [
-    {
-      text: "Oldest",
-      val: "asc",
-    },
-    {
-      text: "Latest",
-      val: "desc",
-    },
-  ];
   const mock = [
     {
       text: "Option 1",
@@ -46,6 +37,17 @@ export default function Products({
     {
       text: "Option 2",
       val: 2,
+    },
+  ];
+
+  const listSort = [
+    {
+      text: "Oldest",
+      val: "asc",
+    },
+    {
+      text: "Latest",
+      val: "desc",
     },
   ];
 
@@ -71,7 +73,6 @@ export default function Products({
   };
 
   const loading = loadingProducts || loadingDelProducts;
-  console.log(loadingDelProducts, "loandpro");
   const error = errorProducts || errorDelProducts;
 
   useEffect(() => {

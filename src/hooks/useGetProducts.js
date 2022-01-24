@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getProducts } from "../graphql/query";
 import { setData } from "../store/productSlice";
 import moment from "moment";
+import { useEffect } from "react";
 
 export default function useGetProducts(sortby) {
   const dispatch = useDispatch();
@@ -41,8 +42,6 @@ export default function useGetProducts(sortby) {
     }
   }
 
-  dispatch(setData(convertProducts));
-
   const displayProducts = convertProducts?.map((value) => {
     return {
       id: value.id,
@@ -54,6 +53,10 @@ export default function useGetProducts(sortby) {
       createdAt: value.createdAt,
     };
   });
+
+  useEffect(() => {
+    dispatch(setData(convertProducts));
+  }, [convertProducts]);
 
   return {
     displayProducts,

@@ -9,9 +9,14 @@ import Login from "./pages/Login/Login";
 import useGetProducts from "./hooks/useGetProducts";
 import useGetUsers from "./hooks/useGetUsers";
 import useGetTransactions from "./hooks/useGetTransactions";
-import { useState } from "react";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useState, useEffect } from "react";
+import ReactLoading from "react-loading";
 
 function App() {
+  const [cookies, setCookies] = useCookies(["token"]);
+  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -38,6 +43,38 @@ function App() {
     errorTransactions,
     refetch: refetchTransactions,
   } = useGetTransactions(sort3.val);
+
+  useEffect(() => {
+    if (cookies.token !== null) {
+      const instance = axios.create({
+        baseURL: "http://localhost:8080/admins/auth",
+        timeout: 1000,
+        headers: { Authorization: `bearer ${cookies.token}` },
+      });
+      instance
+        .get()
+        .then(() => {
+          dispatch(login());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          setLoading(false);
+        });
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <ReactLoading
+        type={"spokes"}
+        color={"#83C5BE"}
+        height={175}
+        width={175}
+        className="mx-auto mt-32"
+      />
+    );
+  }
   return (
     <>
       <Routes>
