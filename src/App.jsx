@@ -17,7 +17,7 @@ import useGetTransactions from "./hooks/useGetTransactions";
 function App() {
   const [cookies, setCookies] = useCookies(["token"]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState();
+
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -59,14 +59,11 @@ function App() {
         })
         .catch((err) => {
           console.log(err, "err");
-          setError(err);
           setLoading(false);
         });
     }
   }, []);
 
-  console.log(loading, "loading");
-  console.log(error, "error");
   if (loading) {
     return (
       <ReactLoading
