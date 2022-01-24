@@ -10,10 +10,40 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
+import useGetProducts from "./hooks/useGetProducts";
+import useGetUsers from "./hooks/useGetUsers";
+import useGetTransactions from "./hooks/useGetTransactions";
 
 function App() {
   const [cookies, setCookies] = useCookies(["token"]);
   const [loading, setLoading] = useState(true);
+
+  const [sort, setSort] = useState({
+    val: null,
+    text: "Sort By",
+  });
+  const [sort2, setSort2] = useState({
+    val: null,
+    text: "Sort By",
+  });
+  const [sort3, setSort3] = useState({
+    val: null,
+    text: "Sort By",
+  });
+  const { displayProducts, loadingProducts, errorProducts, refetch } =
+    useGetProducts(sort.val);
+  const {
+    convertUsers,
+    loadingUsers,
+    errorUsers,
+    refetch: refetchUsers,
+  } = useGetUsers(sort2.val);
+  const {
+    convertTransactions,
+    loadingTransactions,
+    errorTransactions,
+    refetch: refetchTransactions,
+  } = useGetTransactions(sort3.val);
 
   useEffect(() => {
     if (cookies.token !== null) {
@@ -25,7 +55,6 @@ function App() {
       instance
         .get()
         .then(() => {
-          dispatch(login());
           setLoading(false);
         })
         .catch((err) => {
@@ -51,11 +80,50 @@ function App() {
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Products />} />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/update-product/:id" element={<UpdateProduct />} />
+        <Route
+          path="/"
+          element={
+            <Products
+              sort={sort}
+              setSort={setSort}
+              displayProducts={displayProducts}
+              loadingProducts={loadingProducts}
+              errorProducts={errorProducts}
+              refetch={refetch}
+            />
+          }
+        />
+        <Route
+          path="/transactions"
+          element={
+            <Transactions
+              sort={sort2}
+              setSort={setSort2}
+              convertTransactions={convertTransactions}
+              loadingTransactions={loadingTransactions}
+              errorTransactions={errorTransactions}
+              refetch={refetchTransactions}
+            />
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <Users
+              sort={sort3}
+              setSort={setSort3}
+              convertUsers={convertUsers}
+              loadingUsers={loadingUsers}
+              errorUsers={errorUsers}
+              refetch={refetchUsers}
+            />
+          }
+        />
+        <Route path="/add-product" element={<AddProduct refetch={refetch} />} />
+        <Route
+          path="/update-product/:id"
+          element={<UpdateProduct refetch={refetch} />}
+        />
       </Routes>
     </>
   );

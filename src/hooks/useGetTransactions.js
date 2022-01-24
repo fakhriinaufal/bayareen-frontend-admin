@@ -2,12 +2,17 @@ import { useQuery } from "@apollo/client";
 import { getTransactions } from "../graphql/query";
 import moment from "moment";
 
-export default function useSubscribeProducts() {
+export default function useSubscribeProducts(sortby) {
   const {
     data: dataTransactions,
     loading: loadingTransactions,
     error: errorTransactions,
-  } = useQuery(getTransactions);
+    refetch,
+  } = useQuery(getTransactions, {
+    variables: {
+      created_at: sortby,
+    },
+  });
 
   const convertedPayment = {};
   for (let i = 0; i < dataTransactions?.payment_methods.length; i++) {
@@ -45,5 +50,6 @@ export default function useSubscribeProducts() {
     convertTransactions,
     loadingTransactions,
     errorTransactions,
+    refetch,
   };
 }

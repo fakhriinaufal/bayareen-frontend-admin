@@ -1,17 +1,22 @@
-import { useSubscription } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useDispatch } from "react-redux";
-import { subscribeProducts } from "../graphql/subscription";
+import { getProducts } from "../graphql/query";
 import { setData } from "../store/productSlice";
 import moment from "moment";
 import { useEffect } from "react";
 
-export default function useSubscribeProducts() {
+export default function useGetProducts(sortby) {
   const dispatch = useDispatch();
   const {
     data: dataProducts,
     loading: loadingProducts,
     error: errorProducts,
-  } = useSubscription(subscribeProducts);
+    refetch,
+  } = useQuery(getProducts, {
+    variables: {
+      created_at: sortby,
+    },
+  });
 
   const convertProducts = dataProducts?.products.map((value) => {
     return {
@@ -57,5 +62,6 @@ export default function useSubscribeProducts() {
     displayProducts,
     loadingProducts,
     errorProducts,
+    refetch,
   };
 }

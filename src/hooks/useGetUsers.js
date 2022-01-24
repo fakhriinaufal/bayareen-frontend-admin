@@ -1,13 +1,18 @@
-import { useSubscription } from "@apollo/client";
-import { subscribeUsers } from "../graphql/subscription";
+import { useQuery } from "@apollo/client";
+import { getUsers } from "../graphql/query";
 import moment from "moment";
 
-export default function useSubscribeUsers() {
+export default function useSubscribeUsers(sortby) {
   const {
     data: dataUsers,
     loading: loadingUsers,
     error: errorUsers,
-  } = useSubscription(subscribeUsers);
+    refetch,
+  } = useQuery(getUsers, {
+    variables: {
+      created_at: sortby,
+    },
+  });
 
   const convertUsers = dataUsers?.users.map((value) => {
     return {
@@ -33,5 +38,6 @@ export default function useSubscribeUsers() {
     convertUsers,
     loadingUsers,
     errorUsers,
+    refetch,
   };
 }

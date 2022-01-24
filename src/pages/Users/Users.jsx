@@ -1,32 +1,38 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
 import Table from "../../components/Table/Table";
-import useSubscribeUsers from "../../hooks/useSubscribeUsers";
 import ReactLoading from "react-loading";
 
-export default function Users() {
-
-  const [sort, setSort] = useState({
-    val: null,
-    text: "Latest",
-  });
-  const mock = [
+export default function Users({
+  sort,
+  setSort,
+  convertUsers,
+  loadingUsers,
+  errorUsers,
+  refetch,
+}) {
+  const listSort = [
     {
-      text: "Option 1",
-      val: 1,
+      text: "Oldest",
+      val: "asc",
     },
     {
-      text: "Option 2",
-      val: 2,
+      text: "Latest",
+      val: "desc",
     },
   ];
+
   const tableHeader = ["ID", "Name", "Phone Number", "Email", "Created At"];
 
-  const { convertUsers, loadingUsers, errorUsers } = useSubscribeUsers();
+  useEffect(() => {
+    refetch({
+      created_at: sort.val,
+    });
+  }, [sort.val]);
 
   return (
     <Layout sidebar={<Sidebar />}>
@@ -46,7 +52,7 @@ export default function Users() {
             <DropdownImg
               icon={sortby}
               name={"sort"}
-              list={mock}
+              list={listSort}
               value={sort}
               onChange={setSort}
               containerClassName={"w-40"}
