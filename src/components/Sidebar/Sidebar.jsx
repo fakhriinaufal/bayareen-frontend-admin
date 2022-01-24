@@ -3,9 +3,17 @@ import bayareen from "../../assets/icon/bayareen.svg";
 import user from "../../assets/icon/user.svg";
 import product from "../../assets/icon/product.svg";
 import transaction from "../../assets/icon/transaction.svg";
+import logout from "../../assets/icon/logout.svg";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function Sidebar() {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const clickHandler = () => {
+    removeCookie("token");
+    window.location.replace("http://localhost:3000/login");
+  };
+
   return (
     <div className="bg-light-green pt-12 flex flex-col px-5 h-full">
       <Link to="/" className="flex flex-col mb-16">
@@ -29,6 +37,12 @@ export default function Sidebar() {
             <img src={transaction} alt="" />
             <p className="text-white font-semibold">Transactions</p>
           </Link>
+        </li>
+        <li>
+          <button className="flex gap-2" onClick={clickHandler}>
+            <img src={logout} alt="" />
+            <p className="text-white font-semibold">Logout</p>
+          </button>
         </li>
       </ul>
     </div>

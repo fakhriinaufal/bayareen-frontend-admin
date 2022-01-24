@@ -7,19 +7,16 @@ import filterby from "../../assets/icon/filter.svg";
 import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
-import { useState } from "react";
 import Table from "../../components/Table/Table";
-import Login from "../Login/Login";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSubscribeProducts from "../../hooks/useSubscribeProducts";
 import useDeleteProducts from "../../hooks/useDeleteProducts";
 import ReactLoading from "react-loading";
 
 export default function Products() {
-  // const isLogin = false;
-  // if (!isLogin) return <Login />;
-
   const navigate = useNavigate();
+
   const [deleteId, setDeleteId] = useState([]);
   const [sort, setSort] = useState({
     val: null,
