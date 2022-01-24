@@ -6,17 +6,18 @@ import Users from "./pages/Users/Users";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Login from "./pages/Login/Login";
-import useGetProducts from "./hooks/useGetProducts";
-import useGetUsers from "./hooks/useGetUsers";
-import useGetTransactions from "./hooks/useGetTransactions";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
+import useGetProducts from "./hooks/useGetProducts";
+import useGetUsers from "./hooks/useGetUsers";
+import useGetTransactions from "./hooks/useGetTransactions";
 
 function App() {
   const [cookies, setCookies] = useCookies(["token"]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -54,16 +55,18 @@ function App() {
       instance
         .get()
         .then(() => {
-          dispatch(login());
           setLoading(false);
         })
         .catch((err) => {
           console.log(err, "err");
+          setError(err);
           setLoading(false);
         });
     }
   }, []);
 
+  console.log(loading, "loading");
+  console.log(error, "error");
   if (loading) {
     return (
       <ReactLoading
@@ -75,6 +78,7 @@ function App() {
       />
     );
   }
+
   return (
     <>
       <Routes>
