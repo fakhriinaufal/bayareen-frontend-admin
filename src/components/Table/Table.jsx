@@ -86,19 +86,6 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="border">
-          {/* {data?.map((obj, i) => (
-            <tr className="border" key={i}>
-              {action && (
-                <TableCheck
-                  id={obj.id}
-                  onCheck={() => handleCheckDelete(obj.id)}
-                />
-              )}
-              {Object.values(obj).map((data, j) => {
-                return <TableData key={j} text={data} />;
-              })}
-            </tr>
-          ))} */}
           {displayDatas}
         </tbody>
       </table>
