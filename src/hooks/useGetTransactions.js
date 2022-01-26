@@ -23,7 +23,7 @@ export default function useSubscribeProducts(sortby) {
   const convertTransactions = dataTransactions?.transactions.map((value) => {
     return {
       id: value.id,
-      productName: value.product.name,
+      name: value.product.name,
       price: value.price,
       userName: value.user.name,
       category: value.product.category.name,

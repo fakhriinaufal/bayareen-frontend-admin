@@ -16,10 +16,8 @@ export default function Transactions({
   errorTransactions,
   refetch,
 }) {
-  const [filter, setFilter] = useState({
-    val: null,
-    text: "Filter",
-  });
+  const [search, setSearch] = useState("");
+
   const listSort = [
     {
       text: "Oldest",
@@ -62,7 +60,11 @@ export default function Transactions({
         <div className="flex-col ml-10 mt-8 mr-10">
           <h2 className="text-3xl font-bold text-dark-gray">Transactions</h2>
           <div className="inline-flex mt-4 mb-8">
-            <Search containerClassName={"mr-4"} placeholder={"Search"} />
+            <Search
+              containerClassName={"mr-4"}
+              placeholder={"Search"}
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <DropdownImg
               icon={sortby}
               name={"sort"}
@@ -77,6 +79,7 @@ export default function Transactions({
             header={tableHeader}
             error={errorTransactions}
             action={false}
+            search={search}
           />
         </div>
       )}

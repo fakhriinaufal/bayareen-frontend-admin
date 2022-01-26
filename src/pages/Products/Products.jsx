@@ -23,11 +23,7 @@ export default function Products({
   const navigate = useNavigate();
 
   const [deleteId, setDeleteId] = useState([]);
-
-  const [filter, setFilter] = useState({
-    val: null,
-    text: "Filter By",
-  });
+  const [search, setSearch] = useState("");
 
   const listSort = [
     {
@@ -84,7 +80,10 @@ export default function Products({
         <div className="ml-10 mt-8 mr-10">
           <h2 className="text-3xl font-bold text-dark-gray">Products</h2>
           <div className="my-5 flex items-start gap-4">
-            <Search placeholder={"Search"} />
+            <Search
+              placeholder={"Search"}
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <DropdownImg
               icon={sortby}
               name={"sort"}
@@ -114,6 +113,7 @@ export default function Products({
             error={error}
             setDeleteId={setDeleteId}
             deleteId={deleteId}
+            search={search}
           />
         </div>
       )}

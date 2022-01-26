@@ -12,6 +12,7 @@ export default function Table({
   className,
   deleteId,
   setDeleteId,
+  search,
 }) {
   let objectDeleteId = {};
   if (deleteId !== undefined) {
@@ -31,6 +32,14 @@ export default function Table({
 
   const displayDatas = data
     ?.slice(pageVisited, pageVisited + datasPerPage)
+    .filter((value) => {
+      console.log(value);
+      if (search === "") {
+        return value;
+      } else if (value.name.toLowerCase().includes(search.toLowerCase())) {
+        return value;
+      }
+    })
     .map((obj, i) => {
       return (
         <tr className="border" key={i}>
@@ -77,19 +86,6 @@ export default function Table({
           </tr>
         </thead>
         <tbody className="border">
-          {/* {data?.map((obj, i) => (
-            <tr className="border" key={i}>
-              {action && (
-                <TableCheck
-                  id={obj.id}
-                  onCheck={() => handleCheckDelete(obj.id)}
-                />
-              )}
-              {Object.values(obj).map((data, j) => {
-                return <TableData key={j} text={data} />;
-              })}
-            </tr>
-          ))} */}
           {displayDatas}
         </tbody>
       </table>
