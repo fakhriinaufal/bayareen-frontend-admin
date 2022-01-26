@@ -10,7 +10,7 @@ export default function useAddProducts() {
   const addProducts = (product) => {
     setLoading(true);
     axios
-      .post("http://localhost:8080/products", product, {
+      .post("https://api.bayareen.my.id/products", product, {
         headers: {
           Authorization: `bearer ${cookies.token}`,
         },

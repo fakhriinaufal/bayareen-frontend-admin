@@ -12,7 +12,7 @@ export default function useLoginAdmin() {
   const loginAdmin = (object) => {
     setLoading(true);
     axios
-      .post("http://localhost:8080/admins/login", object)
+      .post("https://api.bayareen.my.id/admins/login", object)
       .then((res) => {
         setCookie("token", res.data.data.token, { path: "/" });
         setLoading(false);

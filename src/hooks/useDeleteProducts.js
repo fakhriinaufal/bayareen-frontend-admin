@@ -10,7 +10,7 @@ export default function useDeleteProducts() {
   const deleteProducts = (product) => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8080/products`, {
+      .delete(`https://api.bayareen.my.id/products`, {
         headers: {
           Authorization: `bearer ${cookies.token}`,
         },

@@ -10,7 +10,7 @@ export default function useUpdateProducts() {
   const updateProducts = (product) => {
     setLoading(true);
     axios
-      .patch(`http://localhost:8080/products/${product.id}`, product, {
+      .patch(`https://api.bayareen.my.id/products/${product.id}`, product, {
         headers: {
           Authorization: `bearer ${cookies.token}`,
         },
