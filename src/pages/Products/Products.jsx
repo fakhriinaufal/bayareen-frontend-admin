@@ -3,7 +3,6 @@ import Layout from "../../components/Layout/Layout";
 import Search from "../../components/Search/Search";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ButtonImg from "../../components/ButtonImg/ButtonImg";
-import filterby from "../../assets/icon/filter.svg";
 import sortby from "../../assets/icon/sortby.svg";
 import add from "../../assets/icon/add.svg";
 import del from "../../assets/icon/delete.svg";
@@ -24,21 +23,11 @@ export default function Products({
   const navigate = useNavigate();
 
   const [deleteId, setDeleteId] = useState([]);
- 
+
   const [filter, setFilter] = useState({
     val: null,
     text: "Filter By",
   });
-  const mock = [
-    {
-      text: "Option 1",
-      val: 1,
-    },
-    {
-      text: "Option 2",
-      val: 2,
-    },
-  ];
 
   const listSort = [
     {
@@ -68,7 +57,7 @@ export default function Products({
   } = useDeleteProducts();
 
   const deleteHandler = () => {
-    deleteProducts({ id: deleteId });
+    deleteProducts(deleteId);
     refetch();
   };
 
@@ -104,19 +93,11 @@ export default function Products({
               onChange={setSort}
               containerClassName={"w-40"}
             />
-            <DropdownImg
-              icon={filterby}
-              name={"filter"}
-              list={mock}
-              value={filter}
-              onChange={setFilter}
-              containerClassName={"w-40 mr-14"}
-            />
             <ButtonImg
               alt={"add product"}
               icon={add}
               text={"Add Product"}
-              className={"w-fit text-base py-3"}
+              className={"w-fit text-base py-3 md:ml-60 sm:ml-0"}
               onClick={() => navigate("/add-product")}
             />
             <ButtonImg
