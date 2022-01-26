@@ -35,7 +35,7 @@ export default function useGetProducts(sortby) {
   if (!loadingProducts) {
     let dateObj;
     let momentObj;
-    for (let i = 0; i < convertProducts.length; i++) {
+    for (let i = 0; i < convertProducts?.length; i++) {
       dateObj = new Date(convertProducts[i].createdAt);
       momentObj = moment(dateObj);
       convertProducts[i].createdAt = momentObj.format("lll");
