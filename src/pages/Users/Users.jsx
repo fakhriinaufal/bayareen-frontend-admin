@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
@@ -15,6 +15,8 @@ export default function Users({
   errorUsers,
   refetch,
 }) {
+  const [search, setSearch] = useState("");
+
   const listSort = [
     {
       text: "Oldest",
@@ -48,7 +50,11 @@ export default function Users({
         <div className="flex-col ml-10 mt-8 mr-10">
           <div className="text-3xl font-bold text-dark-gray">Users</div>
           <div className="inline-flex mt-4 mb-8">
-            <Search containerClassName={"mr-4"} placeholder={"Search"} />
+            <Search
+              containerClassName={"mr-4"}
+              placeholder={"Search"}
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <DropdownImg
               icon={sortby}
               name={"sort"}
@@ -63,6 +69,7 @@ export default function Users({
             header={tableHeader}
             error={errorUsers}
             action={false}
+            search={search}
           />
         </div>
       )}
