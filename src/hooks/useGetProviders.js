@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 export default function useGetProviders(idx) {
+  const [cookies, setCookies] = useCookies(["cookies"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [providers, setProviders] = useState([]);
@@ -13,7 +15,11 @@ export default function useGetProviders(idx) {
       return { providers, loading, error };
     }
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          Authorization: `bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         const convertProviders = res.data.data.map((prov) => {
           return {

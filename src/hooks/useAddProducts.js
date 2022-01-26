@@ -1,16 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 export default function useAddProducts() {
+  const [cookies, setCookies] = useCookies(["cookies"]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const addProducts = (product) => {
     setLoading(true);
     axios
-      .post("http://localhost:8080/products", product)
+      .post("http://localhost:8080/products", product, {
+        headers: {
+          Authorization: `bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
-        console.log(res);
         setLoading(false);
       })
       .catch((error) => {
