@@ -4,7 +4,6 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import DropdownImg from "../../components/DropdownImg/DropdownImg";
 import sortby from "../../assets/icon/sortby.svg";
-import filterIcn from "../../assets/icon/filter.svg";
 import Table from "../../components/Table/Table";
 import ReactLoading from "react-loading";
 import { useEffect } from "react";
@@ -29,16 +28,6 @@ export default function Transactions({
     {
       text: "Latest",
       val: "desc",
-    },
-  ];
-  const mock = [
-    {
-      text: "Option 1",
-      val: 1,
-    },
-    {
-      text: "Option 2",
-      val: 2,
     },
   ];
 
@@ -81,14 +70,6 @@ export default function Transactions({
               value={sort}
               onChange={setSort}
               containerClassName={"w-40 mr-4"}
-            />
-            <DropdownImg
-              icon={filterIcn}
-              name={"sort"}
-              list={mock}
-              value={filter}
-              onChange={setFilter}
-              containerClassName={"w-40"}
             />
           </div>
           <Table

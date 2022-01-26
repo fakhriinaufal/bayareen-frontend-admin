@@ -39,7 +39,7 @@ export default function useSubscribeProducts(sortby) {
   if (!loadingTransactions) {
     let dateObj;
     let momentObj;
-    for (let i = 0; i < convertTransactions.length; i++) {
+    for (let i = 0; i < convertTransactions?.length; i++) {
       dateObj = new Date(convertTransactions[i].createdAt);
       momentObj = moment(dateObj);
       convertTransactions[i].createdAt = momentObj.format("lll");

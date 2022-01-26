@@ -1,14 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 export default function useGetCategories() {
+  const [cookies, setCookies] = useCookies(["cookies"]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [categories, setCategories] = useState();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/categories")
+      .get("http://localhost:8080/categories", {
+        headers: {
+          Authorization: `bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         const filterCategories = res.data.data.filter(
           (cat) => cat.name === "Pulsa" || cat.name === "Paket"

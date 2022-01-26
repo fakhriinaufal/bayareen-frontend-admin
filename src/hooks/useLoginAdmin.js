@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function useLoginAdmin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [cookies, setCookie] = useCookies(["token"]);
 
   const loginAdmin = (object) => {
@@ -20,8 +20,9 @@ export default function useLoginAdmin() {
       })
       .catch((err) => {
         setLoading(false);
-        setError(err);
+        setError(err.response.data);
       });
+    setError("");
   };
   return { loginAdmin, loading, error };
 }

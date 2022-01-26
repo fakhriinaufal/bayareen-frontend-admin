@@ -69,7 +69,9 @@ export default function UpdateProduct({ refetch }) {
 
   return (
     <Layout sidebar={<Sidebar />}>
-      {errorUpdateProducts && <p>{errorUpdateProducts}</p>}
+      {errorUpdateProducts && (
+        <p className="text-red-500">{errorUpdateProducts.message}</p>
+      )}
       {loadingUpdateProducts ? (
         <ReactLoading
           type={"spokes"}

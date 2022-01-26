@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Products from "./pages/Products/Products";
 import Transactions from "./pages/Transactions/Transactions";
 import Users from "./pages/Users/Users";
@@ -17,7 +17,7 @@ import useGetTransactions from "./hooks/useGetTransactions";
 function App() {
   const [cookies, setCookies] = useCookies(["token"]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   const [sort, setSort] = useState({
     val: null,
     text: "Sort By",
@@ -46,7 +46,7 @@ function App() {
   } = useGetTransactions(sort3.val);
 
   useEffect(() => {
-    if (cookies.token !== null) {
+    if (cookies.token) {
       const instance = axios.create({
         baseURL: "http://localhost:8080/admins/auth",
         timeout: 1000,
@@ -60,7 +60,11 @@ function App() {
         .catch((err) => {
           console.log(err, "err");
           setLoading(false);
+          navigate("/login");
         });
+    } else {
+      setLoading(false);
+      navigate("/login");
     }
   }, []);
 
