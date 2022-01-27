@@ -1,14 +1,13 @@
-name: Build app and deploy to ec2
+name: Build app and deployt to ec2
 
 on:
   push:
     branches:
       - dev
-      - main
   pull_request:
     branches:
       - dev
-      - main
+
 jobs:
   build:
     name: build image on docker
@@ -19,17 +18,16 @@ jobs:
         env:
           NGINX_CONFIG: ${{ secrets.NGINX_CONFIG }}
         run: |
-          mkdir .nginx
           echo "$NGINX_CONFIG" >> .nginx/nginx.conf
       - name: build docker
-        run: docker build -t fakhriinaufal/bayareen-frontend-customer:latest .
+        run: docker build -t fakhriinaufal/bayareen-frontend-admin:latest
       - name: login docker hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: push image to dockerhub registry
-        run: docker push fakhriinaufal/bayareen-frontend-customer:latest
+        run: docker push fakhriinaufal/bayareen-frontend-admin:latest
   
   deploy:
     name: deploy to ec2
@@ -45,8 +43,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker container rm bayareen-frontend-customer
-            docker image rm fakhriinaufal/bayareen-frontend-customer:latest
-            docker pull fakhriinaufal/bayareen-frontend-customer:latest
-            docker create --name bayareen-frontend-customer -p 3001:80 fakhriinaufal/bayareen-frontend-customer:latest
-            docker container start bayareen-frontend-customer
+            docker container rm bayareen-frontend-admin
+            docker image rm fakhriinaufal/bayareen-frontend-admin:latest
+            docker pull fakhriinaufal/bayareen-frontend-admin:latest
+            docker create --name bayareen-frontend-admin -p 3000:80 fakhriinaufal/bayareen-frontend-admin:latest
+            docker container start bayareen-frontend-admin
