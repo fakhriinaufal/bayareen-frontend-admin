@@ -21,7 +21,7 @@ jobs:
           mkdir .nginx
           echo "$NGINX_CONFIG" >> .nginx/nginx.conf
       - name: build docker
-        run: docker build -t fakhriinaufal/bayareen-frontend-admin:latest
+        run: docker build -t fakhriinaufal/bayareen-frontend-admin:latest .
       - name: login docker hub
         uses: docker/login-action@v1
         with:
