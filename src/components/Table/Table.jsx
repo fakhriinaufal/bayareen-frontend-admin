@@ -33,7 +33,6 @@ export default function Table({
   const displayDatas = data
     ?.slice(pageVisited, pageVisited + datasPerPage)
     .filter((value) => {
-      console.log(value);
       if (search === "") {
         return value;
       } else if (value.name.toLowerCase().includes(search.toLowerCase())) {

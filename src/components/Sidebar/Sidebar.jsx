@@ -11,7 +11,7 @@ export default function Sidebar() {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const clickHandler = () => {
     removeCookie("token");
-    window.location.replace("http://localhost:3000/login");
+    window.location.replace("https://admin.bayareen.my.id/login");
   };
 
   return (
