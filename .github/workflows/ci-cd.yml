@@ -18,6 +18,7 @@ jobs:
         env:
           NGINX_CONFIG: ${{ secrets.NGINX_CONFIG }}
         run: |
+          mkdir .nginx
           echo "$NGINX_CONFIG" >> .nginx/nginx.conf
       - name: build docker
         run: docker build -t fakhriinaufal/bayareen-frontend-admin:latest
